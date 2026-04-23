@@ -1,0 +1,154 @@
+﻿@using LojaProdutosCurso.Dto.Usuario
+
+@model CriarUsuarioDto
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success text-dark" role="alert">
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger text-dark" role="alert">
+        @TempData["MensagemErro"]
+    </div>
+}
+
+<div class="container mt-5">
+
+    <h2>Cadastro de Usuários</h2>
+
+    <form asp-action="Cadastrar" asp-controller="Usuario" method="post">
+
+        <div class="mb-1">
+
+            <label class="form-label">Nome Completo:</label>
+            <input type="text" class="form-control shadow-none" asp-for="Nome" />
+
+        </div>
+
+
+        <div class="mb-1">
+
+            <label class="form-label">Email:</label>
+            <input type="email" class="form-control shadow-none" asp-for="Email" />
+
+        </div>
+
+        <div class="mb-1">
+
+            <label class="form-label">Cargo:</label>
+            <select class="form-control shadow-none" asp-for="Cargo">
+                <option value="Cliente">Cliente</option>
+                <option value="Administrador">Administrador</option>
+            </select>
+
+        </div>
+
+        <div class="col-12 d-flex gap-1 w-100">
+
+            <div class="mb-1 col-6">
+
+                <label class="form-label">CEP:</label>
+                <input type="text" class="form-control shadow-none" id="input-cep" asp-for="CEP" autocomplete="off" />
+
+            </div>
+
+            <div class="mb-1 col-6">
+
+                <label class="form-label">Estado:</label>
+                <input type="text" class="form-control shadow-none" id="input-estado" asp-for="Estado" />
+
+            </div>
+
+        </div>
+
+        
+        <div class="col-12 d-flex gap-1 w-100">
+
+            <div class="mb-1 col-6">
+                <label class="form-label">Logradouro:</label>
+                <input type="text" class="form-control shadow-none" id="input-logradouro" asp-for="Logradouro" />
+
+            </div>
+
+            <div class="mb-1 col-6">
+                <label class="form-label">Numero:</label>
+                <input type="text" class="form-control shadow-none"  asp-for="Numero" />
+
+            </div>
+
+        </div>
+
+        <div class="col-12 d-flex gap-1 w-100">
+
+            <div class="mb-1 col-6">
+                <label class="form-label">Bairro:</label>
+                <input type="text" class="form-control shadow-none" id="input-bairro" asp-for="Bairro" />
+
+            </div>
+
+            <div class="mb-1 col-6">
+                <label class="form-label">Complemento:</label>
+                <input type="text" class="form-control shadow-none" id="input-complemento" asp-for="Complemento" />
+
+            </div>
+
+        </div>
+
+        <div class="mb-1">
+            <label class="form-label">Senha:</label>
+            <input type="password" class="form-control shadow-none" asp-for="Senha" />
+        </div>
+
+        <div class="mb-1">
+            <label class="form-label">Confirmar Senha:</label>
+            <input type="password" class="form-control shadow-none" asp-for="ConfirmarSenha" />
+        </div>
+
+        <div class="d-flex mt-3">
+
+            <button type="submit" class="btn btn-success w-50 mx-2">Cadastrar</button>
+            <a class="btn btn-info w-50" asp-controller="Usuario" asp-action="Index">Voltar</a>
+        </div>
+
+    </form>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+
+<script>
+
+    // <!-- ** Script para consulta de CEP utilizando a API ViaCEP --> 
+    var inputLogradouro = document.querySelector('#input-logradouro');
+    var inputEstado = document.querySelector('#input-estado');
+    var inputBairro = document.querySelector('#input-bairro');
+    var inputComplemento = document.querySelector('#input-complemento');
+
+    // <-- Evento de focusout para o campo de CEP, que é acionado quando o usuário sai do campo após digitar o CEP -->
+    $('#input-cep').focusout(async function (e) {
+
+    // <!-- Obtém o valor do campo de CEP e constrói a URL para a API ViaCEP -->
+    var target = e.target;
+    var value = target.value;
+
+    // <!-- Verifica se o valor do CEP não está vazio antes de fazer a requisição -->
+    var url = `https://viacep.com.br/ws/${value}/json/`; 
+
+    // <!-- Faz uma requisição assíncrona para a API ViaCEP e obtém os dados do endereço correspondente ao CEP -->
+    var resposta = await fetch(url);
+    var dados = await resposta.json();
+
+    // <!-- Preenche os campos de logradouro, estado, bairro e complemento com os dados obtidos da API ViaCEP -->
+    inputLogradouro.value = dados.logradouro;
+    inputEstado.value = dados.uf;
+    inputBairro.value = dados.bairro;
+    inputComplemento.value = dados.complemento;
+        
+    });
+
+</script>

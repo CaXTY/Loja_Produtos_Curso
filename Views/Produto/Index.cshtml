@@ -1,0 +1,86 @@
+﻿@using LojaProdutosCurso.Models
+
+@model List<ProdutoModel>
+
+@* Exibe mensagens de sucesso usando TempData, que é uma forma de passar dados entre ações do controlador. *@
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success text-dark" role="alert">
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+@* Exibe mensagens de erro usando TempData, que é uma forma de passar dados entre ações do controlador. *@
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger text-dark" role="alert">
+        @TempData["MensagemErro"]
+    </div>
+}
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Listagem dos Produtos</h2>
+        <a class="btn btn-success" asp-action="Cadastrar" asp-controller="Produto"><i class="bi bi-plus-circle mx-2"></i>Cadastrar novo produto</a>
+    </div>
+
+    <table class="table table-hover table-bordered" id="registros">
+
+        <thead class="table-dark">
+
+            <tr>
+                <th></th>
+                <th>Nome</th>
+                <th>Marca</th>
+                <th>Categoria</th>
+                <th>Quantidade</th>
+                <th>Valor</th>
+                <th></th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @if(Model.Count() > 0)
+            {
+                @foreach(var produto in Model)
+                {
+                    <tr>
+
+                        @if(produto.Foto != null)
+                        {
+                            <td><img src="~/imagem/@produto.Foto" 
+                                style="width: 50px; height: 50px; object-fit: cover;"/>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+
+                        <td>@produto.Nome</td>
+                        <td>@produto.Marca</td>
+                        <td>@produto.Categoria.Nome</td>
+                        <td>@produto.QuantidadeEstoque</td>
+                        <td>R$ @produto.Valor.ToString("F")</td>
+                        
+                        <td>
+                            <a asp-action="Editar" asp-controller="Produto" asp-route-id="@produto.Id" class="btn btn-info"><i class="bi bi-pencil mx-1"></i>Editar</a>
+                            <a asp-action="Remover" asp-controller="Produto" asp-route-id="@produto.Id" class="btn btn-danger"><i class="bi bi-x-circle mx-1"></i>Remover</a>
+
+                        </td>
+
+                    </tr>
+                }
+            }
+
+
+        </tbody>
+
+    </table>
+
+</div>

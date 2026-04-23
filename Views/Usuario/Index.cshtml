@@ -1,0 +1,68 @@
+﻿@using LojaProdutosCurso.Models
+
+@model List<UsuarioModel>
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success text-dark" role="alert">
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger text-dark" role="alert">
+        @TempData["MensagemErro"]
+    </div>
+}
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Listagem de Usuários</h2>
+        <a asp-controller="Usuario" asp-action="Cadastrar" class="btn btn-success">Cadastrar Usuários</a>
+    </div>
+
+    <table class="table table-hover table-bordered" id="registros">
+
+        <thead class="table-dark">
+
+            <tr>
+                <th>Cargo</th>
+                <th>Nome</th>
+                <th>Estado</th>
+                <th>Email</th>
+                <th>Data de Criação</th>
+                <th>Data de Alteração</th>
+                <th></th>
+            </tr>
+
+        </thead>
+
+        <thbody>
+
+        @if(Model !=null)
+            {
+                @if (Model.Count() > 0)
+                {
+                    foreach (var usuario in Model)
+                    {
+                        <tr>
+                            <td>@usuario.Cargo</td>
+                            <td>@usuario.Nome</td>
+                            <td>@usuario.Endereco.Estado</td>
+                            <td>@usuario.Email</td>
+                            <td>@usuario.DataCadastro.ToString("dd/MM/yyyy")</td>
+                            <td>@usuario.DataAlteracao.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <a asp-controller="Usuario" asp-action="Editar" asp-route-id="@usuario.Id" class="btn-info btn"><i class="bi bi-pencil mx-1"></i>Editar</a>
+                            </td>
+                        </tr>
+                    }
+                }
+             } 
+
+        </thbody>
+
+    </table>
+</div>
