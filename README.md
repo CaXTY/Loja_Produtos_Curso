@@ -4,7 +4,12 @@
 <p>Projeto criado durante os estudos do curso CrisTechCursos</p>
 
 ---
-# Autor
+## Instalação 
+
+| Clone o repositório ou faça o download dos arquivos.
+
+---
+## Autor
 | Carlos Eduardo <br> https://github.com/CaXTY
 
 ---
