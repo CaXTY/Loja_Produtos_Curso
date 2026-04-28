@@ -1,4 +1,4 @@
-# PROJETO_LOJA_PRODUTOS 
+# PROJETO LOJA PRODUTOS 
 
 <h2>Sobre</h2>
 <p>Projeto criado durante os estudos do curso CrisTechCursos</p>
